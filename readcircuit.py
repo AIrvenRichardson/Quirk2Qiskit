@@ -1,7 +1,6 @@
 #Quirk stores circuits in the url, so I simply have to parse the string
-#Heres a test link https://algassert.com/quirk#circuit={%22cols%22:[[%22H%22],[%22%E2%80%A2%22,%22X%22]]}
+#Heres a test link for an entangled state https://algassert.com/quirk#circuit={%22cols%22:[[%22H%22],[%22%E2%80%A2%22,%22X%22]]}
 #Quantum Teleportation link "https://algassert.com/quirk#circuit={%22cols%22:[[%22H%22,1,%22X^t%22],[%22%E2%80%A2%22,%22X%22,%22Bloch%22],[1,%22X%22,%22%E2%80%A2%22],[1,1,%22H%22],[1,%22Measure%22,%22Measure%22],[%22X%22,%22%E2%80%A2%22],[%22Z%22,1,%22%E2%80%A2%22]]}"
-#It is the bell plus state
 import re #gonna need this for parsing.
 
 def parseURL():
@@ -24,7 +23,7 @@ def parseURL():
             pureGate = gate.replace("[", "").replace("]", "").replace("%E2%80%A2","C")
             #Remove gates that dont exist in qiskit
             if((pureGate == "Bloch") | (pureGate == "X^t") | (pureGate == "Y^t") | (pureGate == "Z^t")):
-                print("This gate is a no no: " + str(pureGate))
+                print("This gate is not in Qiskit: " + str(pureGate))
                 line.append("1") #appends the identity gate so all columns have a number of gates = qubits
             else:
                 line.append(pureGate)
@@ -43,6 +42,7 @@ def getNumQubits(qubitOps = []):
     else:
         print("No Circuit?")
 
+#TODO: manage custom gates from quirk
 def makeLines(numQubits, qubitOps):
     #Create the starting lines for any quantum circuit
     lines = []
@@ -57,7 +57,8 @@ def makeLines(numQubits, qubitOps):
             for i in range(0,len(col)):
                 if ((col[i]!="1") & (i!=cbit)):
                     lines.append(f"circuit.c{col[i].lower()}({cbit},{i})\n")
-        #append normally otherwise (MEASUREMENT GATES ARE NOT YET ACCOUNTED FOR!)
+        #append normally otherwise 
+        #TODO account for measured wires and map them to their classical registers.
         else:
             for i in range(0,len(col)):
                 if (col[i]!="1"):
