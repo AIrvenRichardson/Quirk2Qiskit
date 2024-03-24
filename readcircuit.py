@@ -5,7 +5,7 @@ import re #gonna need this for parsing.
 
 def parseURL():
     print('Hand over the link:')
-    url = "https://algassert.com/quirk#circuit={%22cols%22:[[%22H%22],[%22%E2%80%A2%22,%22X%22]]}" #use input(), hardcoded is for testing quickly
+    url = "https://algassert.com/quirk#circuit={%22cols%22:[[%22H%22,1,%22X^t%22],[%22%E2%80%A2%22,%22X%22,%22Bloch%22],[1,%22X%22,%22%E2%80%A2%22],[1,1,%22H%22],[1,%22Measure%22,%22Measure%22],[%22X%22,%22%E2%80%A2%22],[%22Z%22,1,%22%E2%80%A2%22]]}" #use input(), hardcoded is for testing quickly
     print("thanks") 
 
     #https://www.geeksforgeeks.org/python-extract-substrings-between-brackets/
@@ -47,7 +47,7 @@ def makeLines(numQubits, qubitOps):
     #Create the starting lines for any quantum circuit
     lines = []
     lines.append(f"q = QuantumRegister({numQubits})\n")
-    lines.append(f"c = QuantumRegister({numQubits})\n")
+    lines.append(f"c = ClassicalRegister({numQubits})\n")
     lines.append(f"circuit = QuantumCircuit(q,c)\n")
     #iterate over the gates to make the circuit
     for col in qubitOps:
@@ -58,10 +58,11 @@ def makeLines(numQubits, qubitOps):
                 if ((col[i]!="1") & (i!=cbit)):
                     lines.append(f"circuit.c{col[i].lower()}({cbit},{i})\n")
         #append normally otherwise 
-        #TODO account for measured wires and map them to their classical registers.
         else:
             for i in range(0,len(col)):
-                if (col[i]!="1"):
+                if(col[i] == "Measure"):
+                    lines.append(f"circuit.measure([{i}],[{i}])\n")
+                elif (col[i]!="1"):
                     lines.append(f"circuit.{col[i].lower()}({i})\n")
     return lines
 

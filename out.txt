@@ -1,5 +1,0 @@
-q = QuantumRegister(2)
-c = QuantumRegister(2)
-circuit = QuantumCircuit(q,c)
-circuit.h(0)
-circuit.cx(0,1)
