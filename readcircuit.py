@@ -63,8 +63,17 @@ def makeLines(numQubits, qubitOps):
             #apply the controls to all non-control gates in the circuit.
             for i in range(0,len(col)):
                 if ((col[i]!="1") & (col[i]!="AC") & (col[i]!="C")):
-                    if (len(controls) > 1):                    
-                        lines.append(f"circuit.mc{col[i].lower()}({controls},{i})\n")
+                    if (len(controls) > 1): 
+                        if(col[i] == "X"):                   
+                            lines.append(f"circuit.mc{col[i].lower()}({controls},{i})\n")
+                        #if the multi-control isn't happening on an X you have to use a MCMT.
+                        else:
+                            lines.append("#WARNING, AER SIMULATOR CANNOT SIMULATE THIS GATE. PLEASE DECOMPOSE THE CIRCUIT WITH circuit.decompose(reps = some number until it works)!!!!!!!!!!!\n")
+                            lines.append(f"mcmt = MCMT('{col[i].lower()}',{len(controls)},1)\n")
+                            lines.append(f"mcmt.name = \"mc{col[i]}\"\n")
+                            mcmtlist = controls.copy()
+                            mcmtlist.append(i)
+                            lines.append(f"circuit.append(mcmt, {mcmtlist} )\n")
                     else:
                         lines.append(f"circuit.c{col[i].lower()}({controls[0]},{i})\n") #Do a simpler gate type if there is onyl one control in the column.
             #flip the anti-controls back to their orignal state after they were used in a normal control.
