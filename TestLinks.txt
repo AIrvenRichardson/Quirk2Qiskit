@@ -1,0 +1,5 @@
+This is just a list of links to good test circuits. They should all work, quantum teleportation loses the constant rotation gate and bloch spheres but still works correctly.
+
+Heres a test link for an entangled state https://algassert.com/quirk#circuit={%22cols%22:[[%22H%22],[%22%E2%80%A2%22,%22X%22]]}
+Quantum Teleportation link https://algassert.com/quirk#circuit={%22cols%22:[[%22H%22,1,%22X^t%22],[%22%E2%80%A2%22,%22X%22,%22Bloch%22],[1,%22X%22,%22%E2%80%A2%22],[1,1,%22H%22],[1,%22Measure%22,%22Measure%22],[%22X%22,%22%E2%80%A2%22],[%22Z%22,1,%22%E2%80%A2%22]]}
+Multi-control with anti control https://algassert.com/quirk#circuit={%22cols%22:[[%22X%22,%22%E2%97%A6%22,%22%E2%97%A6%22,%22%E2%80%A2%22,%22%E2%80%A2%22]]}

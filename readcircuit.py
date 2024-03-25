@@ -1,11 +1,10 @@
 #Quirk stores circuits in the url, so I simply have to parse the string
-#Heres a test link for an entangled state https://algassert.com/quirk#circuit={%22cols%22:[[%22H%22],[%22%E2%80%A2%22,%22X%22]]}
-#Quantum Teleportation link "https://algassert.com/quirk#circuit={%22cols%22:[[%22H%22,1,%22X^t%22],[%22%E2%80%A2%22,%22X%22,%22Bloch%22],[1,%22X%22,%22%E2%80%A2%22],[1,1,%22H%22],[1,%22Measure%22,%22Measure%22],[%22X%22,%22%E2%80%A2%22],[%22Z%22,1,%22%E2%80%A2%22]]}"
+#Test links can now be found in the testlinks.txt file
 import re #gonna need this for parsing.
 
 def parseURL():
     print('Hand over the link:')
-    url = "https://algassert.com/quirk#circuit={%22cols%22:[[%22H%22,1,%22X^t%22],[%22%E2%80%A2%22,%22X%22,%22Bloch%22],[1,%22X%22,%22%E2%80%A2%22],[1,1,%22H%22],[1,%22Measure%22,%22Measure%22],[%22X%22,%22%E2%80%A2%22],[%22Z%22,1,%22%E2%80%A2%22]]}" #use input(), hardcoded is for testing quickly
+    url = input() #use input(), hardcoded is for testing quickly
     print("thanks") 
 
     #https://www.geeksforgeeks.org/python-extract-substrings-between-brackets/
@@ -20,7 +19,7 @@ def parseURL():
         line = []
         operations = wire.split(',')
         for gate in operations:
-            pureGate = gate.replace("[", "").replace("]", "").replace("%E2%80%A2","C")
+            pureGate = gate.replace("[", "").replace("]", "").replace("%E2%80%A2","C").replace("%E2%97%A6","AC")
             #Remove gates that dont exist in qiskit
             if((pureGate == "Bloch") | (pureGate == "X^t") | (pureGate == "Y^t") | (pureGate == "Z^t")):
                 print("This gate is not in Qiskit: " + str(pureGate))
@@ -52,11 +51,26 @@ def makeLines(numQubits, qubitOps):
     #iterate over the gates to make the circuit
     for col in qubitOps:
         #check for control bits
-        if("C" in col):
-            cbit = col.index("C")
+        if("C" in col) or ("AC" in col):
+            #Grab the index of each control-type gate, we need to know the location of the anti controls separately since they need to be handled.
+            controls = [i for i, x in enumerate(col) if x == "C"]
+            antis = [i for i, x in enumerate(col) if x == "AC"]
+            #combine the control indexes together for the multi-control gate.
+            for a in antis: controls.append(a)
+            #Flip all anti-controls on the x axis, this is because a |0> in an anti control is just a |1> in a normal control
+            for index in antis:                      
+                                lines.append(f"circuit.x({index})\n")
+            #apply the controls to all non-control gates in the circuit.
             for i in range(0,len(col)):
-                if ((col[i]!="1") & (i!=cbit)):
-                    lines.append(f"circuit.c{col[i].lower()}({cbit},{i})\n")
+                if ((col[i]!="1") & (col[i]!="AC") & (col[i]!="C")):
+                    if (len(controls) > 1):                    
+                        lines.append(f"circuit.mc{col[i].lower()}({controls},{i})\n")
+                    else:
+                        lines.append(f"circuit.c{col[i].lower()}({controls[0]},{i})\n") #Do a simpler gate type if there is onyl one control in the column.
+            #flip the anti-controls back to their orignal state after they were used in a normal control.
+            for index in antis:                      
+                                lines.append(f"circuit.x({index})\n")
+
         #append normally otherwise 
         else:
             for i in range(0,len(col)):
