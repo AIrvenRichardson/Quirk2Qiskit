@@ -7,12 +7,24 @@ def parseURL():
     url = input() #use input(), hardcoded is for testing quickly
     print("thanks") 
 
+    url = url.replace("%7B", "{").replace("%7D","}")
     #https://www.geeksforgeeks.org/python-extract-substrings-between-brackets/
     regsult = re.findall(r'\{.*?\}', url)
-    circuitString = regsult[0]
+    circuitString = ''.join(regsult)
     circuitString = circuitString.replace("%22", "")
-    ees = re.findall(r'\[.*?\]', circuitString)
+    circuitandgates = circuitString.split("gates")
+    if(len(circuitandgates) > 1):
+         print(circuitandgates)
+         ees = re.findall(r'\[.*?\]', circuitandgates[0])
+    else:
+         ees = re.findall(r'\[.*?\]', circuitString)
 
+    #Grab ONLY the gates for the circuit, gates for custom gates will be appended (have not yet implemented)
+    qubitOps = parseCircuit(ees)
+
+    return qubitOps
+
+def parseCircuit(ees):
     #Now grab each gate for each circuit, make a 2d array of [Column][Qubit]
     qubitOps = []
     for wire in ees:
