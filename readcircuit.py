@@ -13,16 +13,34 @@ def parseURL():
     circuitString = ''.join(regsult)
     circuitString = circuitString.replace("%22", "")
     circuitandgates = circuitString.split("gates")
+    print(circuitandgates[0])
     if(len(circuitandgates) > 1):
-         print(circuitandgates)
+         gateList = makeCustomGates(circuitandgates[1])
+         #replace columns that are just custom gates with the operations from the gates. THIS DOES NOT YET WORK IF THE CUSTOM GATE IS USED IN A SINLGE COLUMN WITH OTHER GATES
+         for key in gateList:
+              circuitandgates[0] = circuitandgates[0].replace(key, gateList[key])
+         print(circuitandgates[0])
          ees = re.findall(r'\[.*?\]', circuitandgates[0])
     else:
          ees = re.findall(r'\[.*?\]', circuitString)
 
     #Grab ONLY the gates for the circuit, gates for custom gates will be appended (have not yet implemented)
     qubitOps = parseCircuit(ees)
-
     return qubitOps
+
+#Grab each custom gates name and operations
+def makeCustomGates(gateString):
+    gates = gateString.split("}{")
+    gateList = {}
+    for entry in gates:
+        asString = str(entry)
+        #extract the name in brackets
+        name = str(re.findall(r'~.*?\,', entry)).replace("\'","").replace(",","")
+        #grab the column operations and remove excess characters
+        cols = asString[asString.find('cols:'):]
+        cols = cols[6:].replace("]]", "]").replace("}","")
+        gateList[name] = cols
+    return gateList
 
 def parseCircuit(ees):
     #Now grab each gate for each circuit, make a 2d array of [Column][Qubit]
@@ -53,7 +71,7 @@ def getNumQubits(qubitOps = []):
     else:
         print("No Circuit?")
 
-#TODO: manage custom gates from quirk
+#TODO: manage custom gates in the same column as other operations (maybe make custom gates as separate quirk circuits?)
 def makeLines(numQubits, qubitOps):
     #Create the starting lines for any quantum circuit
     lines = []

@@ -6,3 +6,8 @@ Quantum Teleportation link
 https://algassert.com/quirk#circuit={%22cols%22:[[%22H%22,1,%22X^t%22],[%22%E2%80%A2%22,%22X%22,%22Bloch%22],[1,%22X%22,%22%E2%80%A2%22],[1,1,%22H%22],[1,%22Measure%22,%22Measure%22],[%22X%22,%22%E2%80%A2%22],[%22Z%22,1,%22%E2%80%A2%22]]}
 Multi-control with anti control 
 https://algassert.com/quirk#circuit={%22cols%22:[[%22X%22,%22%E2%97%A6%22,%22%E2%97%A6%22,%22%E2%80%A2%22,%22%E2%80%A2%22]]}
+Simple entanglement state with custom gates
+https://algassert.com/quirk#circuit={%22cols%22:[[%22~k9dc%22],[%22~acen%22],[%22~jjp8%22]],%22gates%22:[{%22id%22:%22~k9dc%22,%22name%22:%22ent%22,%22circuit%22:{%22cols%22:[[%22H%22],[%22%E2%80%A2%22,%22X%22]]}},{%22id%22:%22~jjp8%22,%22name%22:%22unent%22,%22circuit%22:{%22cols%22:[[%22X%22,%22%E2%80%A2%22],[1,%22H%22]]}},{%22id%22:%22~acen%22,%22name%22:%22xz%22,%22circuit%22:{%22cols%22:[[%22X%22],[%22Z%22]]}}]}
+Grovers Algorithm, this will not work with the current program version.
+https://algassert.com/quirk#circuit={%22cols%22:[[%22X%22],[%22H%22,%22H%22,%22H%22,%22H%22,%22H%22],[%22~ou73%22],[1,%22~51fe%22],[%22~ou73%22],[1,%22~51fe%22],[%22~ou73%22],[1,%22~51fe%22],[%22~ou73%22]],%22gates%22:[{%22id%22:%22~ou73%22,%22name%22:%22U10%22,%22circuit%22:{%22cols%22:[[%22X%22,%22%E2%97%A6%22,%22%E2%80%A2%22,%22%E2%97%A6%22,%22%E2%80%A2%22]]}},{%22id%22:%22~51fe%22,%22name%22:%22R4%22,%22circuit%22:{%22cols%22:[[%22H%22,%22H%22,%22H%22,%22H%22],[%22X%22,%22X%22,%22X%22,%22X%22],[%22%E2%80%A2%22,%22%E2%80%A2%22,%22%E2%80%A2%22,%22Z%22],[%22Z%22,%22X%22,%22X%22,%22X%22],[%22X%22],[%22Z%22],[%22H%22,%22H%22,%22H%22,%22H%22]]}}]}
+
