@@ -13,7 +13,7 @@ def parseURL():
     circuitString = ''.join(regsult)
     circuitString = circuitString.replace("%22", "")
     circuitandgates = circuitString.split("gates")
-    print(circuitandgates[0])
+    #print(circuitandgates[0])
     if(len(circuitandgates) > 1):
          gateList = makeCustomGates(circuitandgates[1])
          #replace columns that are just custom gates with the operations from the gates. THIS DOES NOT YET WORK IF THE CUSTOM GATE IS USED IN A SINLGE COLUMN WITH OTHER GATES
@@ -23,7 +23,7 @@ def parseURL():
          ees = re.findall(r'\[.*?\]', circuitandgates[0])
     else:
          ees = re.findall(r'\[.*?\]', circuitString)
-
+    print(ees)
     #Grab ONLY the gates for the circuit, gates for custom gates will be appended (have not yet implemented)
     qubitOps = parseCircuit(ees)
     return qubitOps
