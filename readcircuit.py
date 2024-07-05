@@ -51,7 +51,7 @@ def parseCircuit(ees):
         for gate in operations:
             pureGate = gate.replace("[", "").replace("]", "").replace("%E2%80%A2","C").replace("%E2%97%A6","AC")
             #Remove gates that dont exist in qiskit
-            if((pureGate == "Bloch") | (pureGate == "X^t") | (pureGate == "Y^t") | (pureGate == "Z^t")):
+            if((pureGate == "Bloch") | (pureGate == "X^t") | (pureGate == "Y^t") | (pureGate == "Z^t")): #TODO: if I'm lazy I'll probably just keep adding the gates that don't exist in qisket to this if statement, maybe make a set if I feel less alzy about it
                 print("This gate is not in Qiskit: " + str(pureGate))
                 line.append("1") #appends the identity gate so all columns have a number of gates = qubits
             else:
