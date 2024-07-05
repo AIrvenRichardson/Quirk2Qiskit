@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
         else{
             re = /\[.*?\]/g;
             gates = [...s.matchAll(re)]
-            ees = []
+            ees = [] //I am so sorry for this name, I legitmately don't know what it stood for in the original code, my bad
             for (gate of gates){
                 ees.push(gate[0])
             }
