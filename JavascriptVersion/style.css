@@ -10,4 +10,17 @@ button {
     padding: 3px 10px;
     cursor: pointer;
   }
+
+#pycode {
+    white-space: pre-line;
+    display: inline-block;
+    text-align: left;
+  }
   
+.home {
+    padding: 120px 75px 0px 75px;
+    margin: 0 0 200px 0;
+    width: calc(100% - 150px);
+    height: auto;
+    text-align: center;
+}
