@@ -24,3 +24,22 @@ button {
     height: auto;
     text-align: center;
 }
+
+.defText{
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.column{
+  float:left;
+  width: 50%;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;  
+  box-sizing: border-box;
+  border: 1px solid rgb(0,0,0);
+}
+
+.row:after{
+  content: "";
+  display: table;
+  clear: both;
+}
