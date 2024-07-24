@@ -4,21 +4,47 @@
         <meta charset="utf-8" />
         <title>AIR - Quirk2Qiskit</title>
         <link rel="stylesheet" href="style.css" />
-        <link rel="icon" href="funnycar.jpg" type="image/x-icon" />   
+        <link rel="icon" href="bloch.PNG" type="image/x-icon" />   
     </head>
     <body>
-        <center>
-            <h1 class="defText">Quirk2Qiskit</h1>
-        </center>
-        <div class="row">
-            <div class="column">
-                <h2>Put your link here!</h2>
+        <div>
+            <center>
+                <h1 class="defText">Quirk2Qiskit</h1>
+                <div class="buttondiv">
                 <button id="UrlButton">Create Qiskit Code!</button>
+                </div>
+            </center>
+        </div>
+        <div class="row">
+            <div class="column1">
+                <h2> What is this? </h2>
+                <article>
+                    Quirk2Qiskit is a simple tool that lets you turn <a href="https://algassert.com/quirk" target="_blank">Quirk</a> circuits into Qiskit(python) code!<br><br>
+                    It should be able to turn just about any simple circuit into equivalent code.<br><br>
+                    If there are any simple gates that don't work, please reach out to me as I probbably forgot it in the allowed gates list!
+                </article>
             </div>
+
             <div class="column">
                 <h2>Resulting Code Goes Here!</h2>
                 <article id="pycode"></article>
             </div>
+
+            <div class="column1">
+                <h2> Things known not to work. </h2>
+                <article><i>These things wont cause errors but will simply be ignored</i></article>
+                <ul class="noBullets">
+                    <li>Custom Gates</li>
+                    <li>Circuits as Gates</li>
+                    <li>Anything in the 2nd Toolbox</li>
+                    <li>All of the Display Category</li>
+                    <li>Swaps (Will be implemented)</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="bottomBar">
+            <h3 class="bottomText">Development of this project can be seen on my <a href="https://github.com/AIrvenRichardson/Quirk2Qiskit" target="_blank">GitHub</a></h3>
         </div>
     </body>
     <script src="readcircuit.js" defer></script>
